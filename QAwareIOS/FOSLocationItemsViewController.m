@@ -12,8 +12,6 @@
 
 @import CoreLocation;
 
-static NSString * const kRWTStoredItemsKey = @"storedItems";
-
 @interface FOSLocationItemsViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *itemsTableView;
@@ -98,23 +96,24 @@ static NSString * const kRWTStoredItemsKey = @"storedItems";
 //}
 
 - (void)loadItems {
-//    NSArray *storedItems = [[NSUserDefaults standardUserDefaults] arrayForKey:kRWTStoredItemsKey];
-//    self.items = [NSMutableArray array];
-//    
-//    if (storedItems) {
-//        for (NSData *itemData in storedItems) {
-//            RWTItem *item = [NSKeyedUnarchiver unarchiveObjectWithData:itemData];
-//            [self.items addObject:item];
-//            [self startMonitoringItem: item];
-//        }
-//    }
     self.items = [NSMutableArray array];
-    NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:@"FFC26D16-3710-4922-80CB-7E53E92443E4"];
-    unsigned int major = 1;
     
-    NSDictionary *locations = @{@"Kegerator": @2, @"Bathroom": @4, @"Kitchen": @3 };
-    for(id name in locations) {
-        unsigned int minor = [locations[name] intValue];
+    // Make URL request and parse json response
+    NSURL *url = [NSURL URLWithString:@"http://qaware.herokuapp.com/api"];
+    NSData *responseData = [NSData dataWithContentsOfURL:url];
+    NSDictionary *serverData = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableLeaves error:nil];
+    
+    // Set the static data, UUID & major
+    NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:serverData[@"uuid"]];
+    unsigned int major = [serverData[@"major"] intValue];
+    
+    // Loop through the location data
+    // Create a FOSLocationItem and add it to the items array
+    // Start monitoring the location's region
+    NSDictionary *locations = serverData[@"locations"];
+    for(NSDictionary *location in locations) {
+        unsigned int minor = [location[@"minor"] intValue];
+        NSString *name = location[@"name"];
         FOSLocationItem *item = [[FOSLocationItem alloc]initWithName: name
                                                 uuid: uuid
                                                major: major
@@ -122,15 +121,6 @@ static NSString * const kRWTStoredItemsKey = @"storedItems";
         [self.items addObject: item];
         [self startMonitoringItem: item];
     }
-}
-
-- (void)persistItems {
-    NSMutableArray *itemsDataArray = [NSMutableArray array];
-    for (FOSLocationItem *item in self.items) {
-        NSData *itemData = [NSKeyedArchiver archivedDataWithRootObject:item];
-        [itemsDataArray addObject:itemData];
-    }
-    [[NSUserDefaults standardUserDefaults] setObject:itemsDataArray forKey:kRWTStoredItemsKey];
 }
 
 
@@ -150,18 +140,6 @@ static NSString * const kRWTStoredItemsKey = @"storedItems";
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        FOSLocationItem *itemToRemove = [self.items objectAtIndex:indexPath.row];
-        [self stopMonitoringItem:itemToRemove];
-        [tableView beginUpdates];
-        [self.items removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [tableView endUpdates];
-        [self persistItems];
-    }
 }
 
 #pragma mark - UITableViewDelegate
@@ -184,14 +162,14 @@ static NSString * const kRWTStoredItemsKey = @"storedItems";
 //        message = @"Something went horribly wrong";
 //    }
     
-    NSString *message = @"WTF";
-    
-    UIAlertView *formAlert = [[UIAlertView alloc]
-                              initWithTitle:item.name message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [formAlert show];
-//    NSString *detailMessage = [NSString stringWithFormat:@"UUID: %@\nMajor: %d\nMinor: %d", item.uuid.UUIDString, item.majorValue, item.minorValue];
-//    UIAlertView *detailAlert = [[UIAlertView alloc] initWithTitle:@"Details" message:detailMessage delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil];
-//    [detailAlert show];
+//    NSString *message = @"WTF";
+//    
+//    UIAlertView *formAlert = [[UIAlertView alloc]
+//                              initWithTitle:item.name message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//    [formAlert show];
+    NSString *detailMessage = [NSString stringWithFormat:@"UUID: %@\nMajor: %d\nMinor: %d", item.uuid.UUIDString, item.majorValue, item.minorValue];
+    UIAlertView *detailAlert = [[UIAlertView alloc] initWithTitle:@"Details" message:detailMessage delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil];
+    [detailAlert show];
     
 }
 
