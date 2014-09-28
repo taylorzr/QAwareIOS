@@ -23,6 +23,7 @@
 		83EC54D81898DD3600EA1765 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83EC54D61898DD3600EA1765 /* InfoPlist.strings */; };
 		83EC54DA1898DD3600EA1765 /* QAwareIOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EC54D91898DD3600EA1765 /* QAwareIOSTests.m */; };
 		83EC54EB1898E13900EA1765 /* FOSLocationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EC54EA1898E13900EA1765 /* FOSLocationItem.m */; };
+		94204BE319D8C30C00CB4A64 /* FOSInspectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94204BE219D8C30C00CB4A64 /* FOSInspectionViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,8 @@
 		83EC54D91898DD3600EA1765 /* QAwareIOSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QAwareIOSTests.m; sourceTree = "<group>"; };
 		83EC54E91898E13900EA1765 /* FOSLocationItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FOSLocationItem.h; sourceTree = "<group>"; };
 		83EC54EA1898E13900EA1765 /* FOSLocationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FOSLocationItem.m; sourceTree = "<group>"; };
+		94204BE119D8C30C00CB4A64 /* FOSInspectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FOSInspectionViewController.h; sourceTree = "<group>"; };
+		94204BE219D8C30C00CB4A64 /* FOSInspectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FOSInspectionViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +122,8 @@
 			isa = PBXGroup;
 			children = (
 				83EC54C61898DD3600EA1765 /* Images.xcassets */,
+				94204BE119D8C30C00CB4A64 /* FOSInspectionViewController.h */,
+				94204BE219D8C30C00CB4A64 /* FOSInspectionViewController.m */,
 				83EC54C01898DD3600EA1765 /* Main.storyboard */,
 				83EC54BD1898DD3600EA1765 /* FOSAppDelegate.h */,
 				83EC54BE1898DD3600EA1765 /* FOSAppDelegate.m */,
@@ -268,6 +273,7 @@
 				83EC54EB1898E13900EA1765 /* FOSLocationItem.m in Sources */,
 				83EC54BF1898DD3600EA1765 /* FOSAppDelegate.m in Sources */,
 				83EC54BB1898DD3600EA1765 /* main.m in Sources */,
+				94204BE319D8C30C00CB4A64 /* FOSInspectionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
