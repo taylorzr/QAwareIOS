@@ -8,15 +8,11 @@
 
 #import "FOSLocationItem.h"
 
-static NSString * const kRWTItemNameKey = @"name";
-static NSString * const kRWTItemUUIDKey = @"uuid";
-static NSString * const kRWTItemMajorValueKey = @"major";
-static NSString * const kRWTItemMinorValueKey = @"minor";
-
 @implementation FOSLocationItem
 
 - (instancetype)initWithName:(NSString *)name
                         uuid:(NSUUID *)uuid
+                         url:(NSString *)url
                        major:(uint16_t)major
                        minor:(uint16_t)minor
 {
@@ -27,6 +23,7 @@ static NSString * const kRWTItemMinorValueKey = @"minor";
 
     _name = name;
     _uuid = uuid;
+    _url = url;
     _majorValue = major;
     _minorValue = minor;
 
@@ -42,29 +39,6 @@ static NSString * const kRWTItemMinorValueKey = @"minor";
     } else {
         return NO;
     }
-}
-
-#pragma mark - NSCoding
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-    self = [super init];
-    if (!self) {
-        return nil;
-    }
-    
-    _name = [aDecoder decodeObjectForKey:kRWTItemNameKey];
-    _uuid = [aDecoder decodeObjectForKey:kRWTItemUUIDKey];
-    _majorValue = [[aDecoder decodeObjectForKey:kRWTItemMajorValueKey] unsignedIntegerValue];
-    _minorValue = [[aDecoder decodeObjectForKey:kRWTItemMinorValueKey] unsignedIntegerValue];
-    
-    return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-    [aCoder encodeObject:self.name forKey:kRWTItemNameKey];
-    [aCoder encodeObject:self.uuid forKey:kRWTItemUUIDKey];
-    [aCoder encodeObject:[NSNumber numberWithUnsignedInteger:self.majorValue] forKey:kRWTItemMajorValueKey];
-    [aCoder encodeObject:[NSNumber numberWithUnsignedInteger:self.minorValue] forKey:kRWTItemMinorValueKey];
 }
 
 @end

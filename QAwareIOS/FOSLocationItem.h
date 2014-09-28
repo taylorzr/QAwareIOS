@@ -10,16 +10,18 @@
 
 @import CoreLocation;
 
-@interface FOSLocationItem : NSObject <NSCoding>
+@interface FOSLocationItem : NSObject
 
 @property (strong, nonatomic, readonly) NSString *name;
 @property (strong, nonatomic, readonly) NSUUID *uuid;
+@property (strong, nonatomic, readonly) NSString *url;
 @property (assign, nonatomic, readonly) CLBeaconMajorValue majorValue;
 @property (assign, nonatomic, readonly) CLBeaconMinorValue minorValue;
 @property (strong, nonatomic) CLBeacon *lastSeenBeacon;
 
 - (instancetype)initWithName:(NSString *)name
                         uuid:(NSUUID *)uuid
+                         url:(NSString *)url
                        major:(CLBeaconMajorValue)major
                        minor:(CLBeaconMinorValue)minor;
 
