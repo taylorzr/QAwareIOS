@@ -12,7 +12,7 @@
 
 @import CoreLocation;
 
-@interface FOSLocationItemsViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface FOSLocationItemsViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *itemsTableView;
 @property (strong, nonatomic) NSMutableArray *items;
@@ -114,8 +114,10 @@
     for(NSDictionary *location in locations) {
         unsigned int minor = [location[@"minor"] intValue];
         NSString *name = location[@"name"];
+        NSString *url = location[@"url"];
         FOSLocationItem *item = [[FOSLocationItem alloc]initWithName: name
                                                 uuid: uuid
+                                                 url: url
                                                major: major
                                                minor: minor];
         [self.items addObject: item];
@@ -134,7 +136,6 @@
     FOSLocationItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Item" forIndexPath:indexPath];
     FOSLocationItem *item = self.items[indexPath.row];
     cell.item = item;
-    
     return cell;
 }
 
@@ -147,27 +148,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     FOSLocationItem *item = [self.items objectAtIndex:indexPath.row];
-//    NSURL *url = [NSURL URLWithString:@"http://192.168.0.17:3000/api"];
-//    NSData *responseData = [NSData dataWithContentsOfURL:url];
-//    NSDictionary *forms = [NSJSONSerialization JSONObjectWithData: responseData options: NSJSONReadingMutableLeaves error: nil];
-//    
-//    NSString *message = [[NSString alloc] init];
-//    if ([item.name isEqualToString: @"Kegerator"]){
-//        message = forms[@"form1"];
-//    } else if ([item.name isEqualToString: @"Kitchen"]) {
-//        message = forms[@"form2"];
-//    } else if ([item.name isEqualToString: @"Bathroom"]) {
-//        message = forms[@"form3"];
-//    } else {
-//        message = @"Something went horribly wrong";
-//    }
-    
-//    NSString *message = @"WTF";
-//    
-//    UIAlertView *formAlert = [[UIAlertView alloc]
-//                              initWithTitle:item.name message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//    [formAlert show];
-    NSString *detailMessage = [NSString stringWithFormat:@"UUID: %@\nMajor: %d\nMinor: %d", item.uuid.UUIDString, item.majorValue, item.minorValue];
+
+    NSString *detailMessage = [NSString stringWithFormat:@"UUID: %@\nMajor: %d\nMinor: %d\nUrl: %@", item.uuid.UUIDString, item.majorValue, item.minorValue, item.url];
     UIAlertView *detailAlert = [[UIAlertView alloc] initWithTitle:@"Details" message:detailMessage delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil];
     [detailAlert show];
     
