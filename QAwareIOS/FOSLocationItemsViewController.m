@@ -9,14 +9,14 @@
 #import "FOSLocationItemsViewController.h"
 #import "FOSLocationItem.h"
 #import "FOSLocationItemCell.h"
+#import "FOSInspectionViewController.h"
 
 @import CoreLocation;
 
 @interface FOSLocationItemsViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *itemsTableView;
-@property (strong, nonatomic) NSMutableArray *items;
 @property (strong, nonatomic) CLLocationManager *locationManager;
+@property (weak, nonatomic) IBOutlet UITableView *itemsTableView;
 
 @end
 
@@ -78,23 +78,6 @@
     [self.locationManager stopRangingBeaconsInRegion: beaconRegion];
 }
 
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-//    if ([segue.identifier isEqualToString:@"Add"]) {
-//        UINavigationController *navController = segue.destinationViewController;
-//        RWTAddItemViewController *addItemViewController = (RWTAddItemViewController *)navController.topViewController;
-//        [addItemViewController setItemAddedCompletion:^(RWTItem *newItem) {
-//            [self.items addObject:newItem];
-//            [self.itemsTableView beginUpdates];
-//            NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:self.items.count-1 inSection:0];
-//            [self.itemsTableView insertRowsAtIndexPaths:@[newIndexPath]
-//                                       withRowAnimation:UITableViewRowAnimationAutomatic];
-//            [self.itemsTableView endUpdates];
-//            [self startMonitoringItem: newItem];
-//            [self persistItems];
-//        }];
-//    }
-//}
-
 - (void)loadItems {
     self.items = [NSMutableArray array];
     
@@ -147,12 +130,22 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    FOSLocationItem *item = [self.items objectAtIndex:indexPath.row];
-
-    NSString *detailMessage = [NSString stringWithFormat:@"UUID: %@\nMajor: %d\nMinor: %d\nUrl: %@", item.uuid.UUIDString, item.majorValue, item.minorValue, item.url];
-    UIAlertView *detailAlert = [[UIAlertView alloc] initWithTitle:@"Details" message:detailMessage delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil];
-    [detailAlert show];
-    
+//    FOSLocationItem *item = [self.items objectAtIndex:indexPath.row];
+//
+//    NSString *detailMessage = [NSString stringWithFormat:@"UUID: %@\nMajor: %d\nMinor: %d\nUrl: %@", item.uuid.UUIDString, item.majorValue, item.minorValue, item.url];
+//    UIAlertView *detailAlert = [[UIAlertView alloc] initWithTitle:@"Details" message:detailMessage delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil];
+//    [detailAlert show];
+//    
 }
 
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"inspectionView"]) {
+        NSIndexPath *indexPath = [self.itemsTableView indexPathForSelectedRow];
+        FOSLocationItem *locationItem = [self.items objectAtIndex:indexPath.row];
+        FOSInspectionViewController *controller = (UIWebView *)segue.destinationViewController;
+        controller.query = locationItem.url;
+    }
+}
+    
 @end

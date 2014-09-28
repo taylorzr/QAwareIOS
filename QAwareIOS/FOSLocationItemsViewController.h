@@ -10,4 +10,8 @@
 
 @interface FOSLocationItemsViewController : UIViewController
 
+
+@property (strong, nonatomic) NSMutableArray *items;
+
+
 @end
