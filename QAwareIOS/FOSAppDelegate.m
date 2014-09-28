@@ -22,6 +22,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
 
