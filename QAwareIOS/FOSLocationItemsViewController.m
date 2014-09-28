@@ -169,8 +169,8 @@ static NSString * const kRWTStoredItemsKey = @"storedItems";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     FOSLocationItem *item = [self.items objectAtIndex:indexPath.row];
-//    NSURL *url = [NSURL URLWithString:@"http://192.168.0.17:3000/api"];
-//    NSData *responseData = [NSData dataWithContentsOfURL:url];
+    NSURL *url = [NSURL URLWithString:@"http://192.168.0.17:3000/api"];
+    NSData *responseData = [NSData dataWithContentsOfURL:url];
 //    NSDictionary *forms = [NSJSONSerialization JSONObjectWithData: responseData options: NSJSONReadingMutableLeaves error: nil];
 //    
 //    NSString *message = [[NSString alloc] init];
@@ -184,11 +184,6 @@ static NSString * const kRWTStoredItemsKey = @"storedItems";
 //        message = @"Something went horribly wrong";
 //    }
     
-    NSString *message = @"WTF";
-    
-    UIAlertView *formAlert = [[UIAlertView alloc]
-                              initWithTitle:item.name message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [formAlert show];
 //    NSString *detailMessage = [NSString stringWithFormat:@"UUID: %@\nMajor: %d\nMinor: %d", item.uuid.UUIDString, item.majorValue, item.minorValue];
 //    UIAlertView *detailAlert = [[UIAlertView alloc] initWithTitle:@"Details" message:detailMessage delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil];
 //    [detailAlert show];
