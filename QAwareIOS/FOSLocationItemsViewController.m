@@ -150,6 +150,18 @@
 //    
 }
 
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    FOSLocationItem *item = [self.items objectAtIndex: indexPath.row];
+    if (item.lastSeenBeacon.proximity != CLProximityUnknown){
+        return indexPath;
+    } else {
+        UIAlertView *lazyAlert = [[UIAlertView alloc] initWithTitle: @"You is lazy" message: @"You must be near the beacon to perform this inspection" delegate: nil cancelButtonTitle: @"Ok" otherButtonTitles: nil];
+        [lazyAlert show];
+        return nil;
+    }
+    
+}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"inspectionView"]) {
