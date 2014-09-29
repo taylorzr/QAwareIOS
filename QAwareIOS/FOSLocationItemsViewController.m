@@ -31,6 +31,16 @@
     [self loadItems];
 }
 
+- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLBeaconRegion *)region {
+    if ([region isKindOfClass:[CLBeaconRegion class]]) {
+        CLBeaconRegion *beaconRegion = (CLBeaconRegion *)region;
+        NSUUID *beaconID = beaconRegion.proximityUUID;
+        NSString *identifier = beaconRegion.identifier;
+        UIAlertView *notification = [[UIAlertView alloc] initWithTitle:@"Details" message:[NSString stringWithFormat:@"UUID: %@\nIdentifier: %@", beaconID, identifier] delegate:nil cancelButtonTitle:@"Nice" otherButtonTitles:nil, nil];
+        [notification show];
+    }
+}
+
 
 - (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region
 {
@@ -63,6 +73,8 @@
                                     ];
     return beaconRegion;
 }
+
+
 
 - (void)startMonitoringItem:(FOSLocationItem *)item
 {

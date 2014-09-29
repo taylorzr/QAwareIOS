@@ -11,9 +11,7 @@
 
 @import CoreLocation;
 
-@interface FOSAppDelegate () <CLLocationManagerDelegate>
-
-@property (strong, nonatomic) CLLocationManager *locationManager;
+@interface FOSAppDelegate ()
 
 @end
 
@@ -23,29 +21,10 @@
 {
     // Override point for customization after application launch.
     
-    self.locationManager = [[CLLocationManager alloc] init];
-    self.locationManager.delegate = self;
-
     return YES;
 }
 
-- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
-    if ([region isKindOfClass:[CLBeaconRegion class]]) {
-        UILocalNotification *notification = [[UILocalNotification alloc] init];
-        notification.alertBody = @"Are you forgetting something?";
-        notification.soundName = @"Default";
-        [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
-    }
-}
 
-- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
-    if ([region isKindOfClass:[CLBeaconRegion class]]) {
-        UILocalNotification *notification = [[UILocalNotification alloc] init];
-        notification.alertBody = @"You've entered the danger zone!";
-        notification.soundName = @"Default";
-        [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
-    }
-}
 							
 - (void)applicationWillResignActive:(UIApplication *)application
 {
