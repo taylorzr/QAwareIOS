@@ -12,6 +12,7 @@
 
 
 @property (strong, nonatomic) NSMutableArray *items;
+@property (nonatomic) BOOL *allowsSelection;
 
 
 @end

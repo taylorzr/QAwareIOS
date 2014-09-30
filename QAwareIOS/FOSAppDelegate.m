@@ -11,9 +11,7 @@
 
 @import CoreLocation;
 
-@interface FOSAppDelegate () <CLLocationManagerDelegate>
-
-@property (strong, nonatomic) CLLocationManager *locationManager;
+@interface FOSAppDelegate ()
 
 @end
 
@@ -22,30 +20,17 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setValue:@"brandon" forKey:@"name"];
+    [defaults setValue:@"1" forKey:@"employee_id"];
+    [defaults synchronize];
     
-    self.locationManager = [[CLLocationManager alloc] init];
-    self.locationManager.delegate = self;
-
+    self.window.backgroundColor = [UIColor colorWithRed:0.973 green:0.973 blue:1.0 alpha:.75];
+    
     return YES;
 }
 
-- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
-    if ([region isKindOfClass:[CLBeaconRegion class]]) {
-        UILocalNotification *notification = [[UILocalNotification alloc] init];
-        notification.alertBody = @"Are you forgetting something?";
-        notification.soundName = @"Default";
-        [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
-    }
-}
 
-- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
-    if ([region isKindOfClass:[CLBeaconRegion class]]) {
-        UILocalNotification *notification = [[UILocalNotification alloc] init];
-        notification.alertBody = @"You've entered the danger zone!";
-        notification.soundName = @"Default";
-        [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
-    }
-}
 							
 - (void)applicationWillResignActive:(UIApplication *)application
 {
