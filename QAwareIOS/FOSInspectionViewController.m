@@ -8,7 +8,9 @@
 
 #import "FOSInspectionViewController.h"
 
-@interface FOSInspectionViewController ()
+@interface FOSInspectionViewController () <UIWebViewDelegate>
+
+@property BOOL initialPage;
 
 @end
 
@@ -16,6 +18,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.initialPage = YES;
+    self.inspectionWebView.delegate = self;
     // Do any additional setup after loading the view.
     NSString *base = @"http://qaware.herokuapp.com/";
     NSURL *inspectionURL = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@", base, _query]];
@@ -23,11 +27,31 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:inspectionURL];
     [self.inspectionWebView loadRequest:request];
     
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    NSCachedURLResponse *cachedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:webView.request];
+    NSHTTPURLResponse *response = (NSHTTPURLResponse *)[cachedResponse response];
+    long code = response.statusCode;
+    if (self.initialPage) {
+        NSLog(@"This is the first time a page loaded");
+        self.initialPage = NO;
+    } else {
+        if (code == 200){
+            NSLog(@"Happiness has been achieved");
+        } else if (code == 201) {
+            NSLog(@"You did something very stupid");
+        } else {
+            NSLog(@"Either you cancelled or something went terribly wrong");
+        }
+    }
 }
 
 /*
