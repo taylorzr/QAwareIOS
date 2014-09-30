@@ -29,42 +29,20 @@
     
     [self loadItems];
     
-    NSNumber *beaconID = @1;
-    NSString *userID = [[NSUserDefaults standardUserDefaults] stringForKey:@"employee_id"];
-    NSLog(@"%@", userID);
-    
-    NSDictionary *beaconData = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                beaconID, @"beacon_id",
-                                userID, @"employee_id", nil];
-    
-    NSData *beaconJSON = [NSJSONSerialization dataWithJSONObject:beaconData
-                                                         options:NSJSONWritingPrettyPrinted
-                                                           error:nil];
-    
-    NSString *urlString = [NSString stringWithFormat:@"http://qaware.herokuapp.com/api/beacons"];
-    NSURL *url = [NSURL URLWithString:urlString];
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:url];
-    [request setHTTPMethod:@"PUT"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setHTTPBody:beaconJSON];
-    
-    NSHTTPURLResponse *response = nil;
-    NSError *error = nil;
-    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    NSLog(@"%i", response.statusCode);
 }
 
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLBeaconRegion *)region {
     if ([region isKindOfClass:[CLBeaconRegion class]]) {
         
         CLBeaconRegion *beaconRegion = (CLBeaconRegion *)region;
-        NSNumber *beaconID = @1;
+        NSString *beaconID = [beaconRegion.minor stringValue];
         NSString *userID = [[NSUserDefaults standardUserDefaults] stringForKey:@"employee_id"];
-        NSLog(@"%@", userID);
+        NSString *message = [NSString stringWithFormat:@"Minor: %@\nEmployee Id: %@", beaconID, userID];
+        UIAlertView *enterAlert = [[UIAlertView alloc] initWithTitle:@"Enter Region" message:message delegate:nil cancelButtonTitle:@"Cool." otherButtonTitles:nil, nil];
+        [enterAlert show];
 
         NSDictionary *beaconData = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                    beaconID, @"beacon_id",
+                                    beaconID, @"minor_id",
                                     userID, @"employee_id", nil];
 
         NSData *beaconJSON = [NSJSONSerialization dataWithJSONObject:beaconData
@@ -90,12 +68,14 @@
     if ([region isKindOfClass:[CLBeaconRegion class]]) {
         
         CLBeaconRegion *beaconRegion = (CLBeaconRegion *)region;
-        NSNumber *beaconID = @1;
+        NSString *beaconID = [beaconRegion.minor stringValue];
         NSString *userID = [[NSUserDefaults standardUserDefaults] stringForKey:@"employee_id"];
-        NSLog(@"%@", userID);
+        NSString *message = [NSString stringWithFormat:@"Minor: %@\nEmployee Id: %@", beaconID, userID];
+        UIAlertView *exitAlert = [[UIAlertView alloc] initWithTitle:@"Exit Region" message:message delegate:nil cancelButtonTitle:@"Cool." otherButtonTitles:nil, nil];
+        [exitAlert show];
         
         NSDictionary *beaconData = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                    beaconID, @"beacon_id",
+                                    beaconID, @"minor_id",
                                     userID, @"employee_id", nil];
         
         NSData *beaconJSON = [NSJSONSerialization dataWithJSONObject:beaconData
