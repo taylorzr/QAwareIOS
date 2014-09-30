@@ -68,6 +68,7 @@
         else {
             self.detailTextLabel.textColor = [UIColor grayColor];
             self.textLabel.textColor = [UIColor grayColor];
+            self.backgroundColor = [UIColor whiteColor];
         }
     }
 }
