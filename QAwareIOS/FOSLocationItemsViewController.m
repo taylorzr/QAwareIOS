@@ -24,20 +24,96 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
     
     [self loadItems];
+    
+    NSNumber *beaconID = @1;
+    NSString *userID = [[NSUserDefaults standardUserDefaults] stringForKey:@"employee_id"];
+    NSLog(@"%@", userID);
+    
+    NSDictionary *beaconData = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                beaconID, @"beacon_id",
+                                userID, @"employee_id", nil];
+    
+    NSData *beaconJSON = [NSJSONSerialization dataWithJSONObject:beaconData
+                                                         options:NSJSONWritingPrettyPrinted
+                                                           error:nil];
+    
+    NSString *urlString = [NSString stringWithFormat:@"http://qaware.herokuapp.com/api/beacons"];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:url];
+    [request setHTTPMethod:@"PUT"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:beaconJSON];
+    
+    NSHTTPURLResponse *response = nil;
+    NSError *error = nil;
+    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    NSLog(@"%i", response.statusCode);
 }
 
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLBeaconRegion *)region {
     if ([region isKindOfClass:[CLBeaconRegion class]]) {
+        
         CLBeaconRegion *beaconRegion = (CLBeaconRegion *)region;
-        NSUUID *beaconID = beaconRegion.proximityUUID;
-        NSString *identifier = beaconRegion.identifier;
-        UIAlertView *notification = [[UIAlertView alloc] initWithTitle:@"Details" message:[NSString stringWithFormat:@"UUID: %@\nIdentifier: %@", beaconID, identifier] delegate:nil cancelButtonTitle:@"Nice" otherButtonTitles:nil, nil];
-        [notification show];
+        NSNumber *beaconID = @1;
+        NSString *userID = [[NSUserDefaults standardUserDefaults] stringForKey:@"employee_id"];
+        NSLog(@"%@", userID);
+
+        NSDictionary *beaconData = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                    beaconID, @"beacon_id",
+                                    userID, @"employee_id", nil];
+
+        NSData *beaconJSON = [NSJSONSerialization dataWithJSONObject:beaconData
+                                                             options:NSJSONWritingPrettyPrinted
+                                                               error:nil];
+
+        NSString *urlString = [NSString stringWithFormat:@"http://qaware.herokuapp.com/api/beacons"];
+        NSURL *url = [NSURL URLWithString:urlString];
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+        [request setURL:url];
+        [request setHTTPMethod:@"PUT"];
+        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        [request setHTTPBody:beaconJSON];
+
+        NSHTTPURLResponse *response = nil;
+        NSError *error = nil;
+        NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+        NSLog(@"%i", response.statusCode);
+        }
+    }
+
+- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLBeaconRegion *)region {
+    if ([region isKindOfClass:[CLBeaconRegion class]]) {
+        
+        CLBeaconRegion *beaconRegion = (CLBeaconRegion *)region;
+        NSNumber *beaconID = @1;
+        NSString *userID = [[NSUserDefaults standardUserDefaults] stringForKey:@"employee_id"];
+        NSLog(@"%@", userID);
+        
+        NSDictionary *beaconData = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                    beaconID, @"beacon_id",
+                                    userID, @"employee_id", nil];
+        
+        NSData *beaconJSON = [NSJSONSerialization dataWithJSONObject:beaconData
+                                                             options:NSJSONWritingPrettyPrinted
+                                                               error:nil];
+        
+        NSString *urlString = [NSString stringWithFormat:@"http://qaware.herokuapp.com/api/beacons"];
+        NSURL *url = [NSURL URLWithString:urlString];
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+        [request setURL:url];
+        [request setHTTPMethod:@"DELETE"];
+        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        [request setHTTPBody:beaconJSON];
+        
+        NSHTTPURLResponse *response = nil;
+        NSError *error = nil;
+        NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+        NSLog(@"%i", response.statusCode);
     }
 }
 
@@ -94,22 +170,24 @@
     self.items = [NSMutableArray array];
     
     // Make URL request and parse json response
-    NSURL *url = [NSURL URLWithString:@"http://qaware.herokuapp.com/api"];
+    NSURL *url = [NSURL URLWithString:@"http://qaware.herokuapp.com/api/forms"];
     NSData *responseData = [NSData dataWithContentsOfURL:url];
     NSDictionary *serverData = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableLeaves error:nil];
     
     // Set the static data, UUID & major
-    NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:serverData[@"uuid"]];
-    unsigned int major = [serverData[@"major"] intValue];
+//    NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:serverData[@"uuid"]];
+//    unsigned int major = [serverData[@"major"] intValue];
     
     // Loop through the location data
     // Create a FOSLocationItem and add it to the items array
     // Start monitoring the location's region
-    NSDictionary *locations = serverData[@"locations"];
-    for(NSDictionary *location in locations) {
-        unsigned int minor = [location[@"minor"] intValue];
-        NSString *name = location[@"name"];
-        NSString *url = location[@"url"];
+    for(NSDictionary *location in serverData) {
+        NSDictionary *beaconDict = location[@"beacon"];
+        NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:beaconDict[@"uuid"]];
+        unsigned int major = [beaconDict[@"major"] intValue];
+        unsigned int minor = [beaconDict[@"minor"] intValue];
+        NSString *name = beaconDict[@"location"];
+        NSString *url = [NSString stringWithFormat:@"forms/%@", beaconDict[@"id"]];
         FOSLocationItem *item = [[FOSLocationItem alloc]initWithName: name
                                                 uuid: uuid
                                                  url: url
@@ -153,10 +231,10 @@
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     FOSLocationItem *item = [self.items objectAtIndex: indexPath.row];
-    if (item.lastSeenBeacon.proximity != CLProximityUnknown){
+    if (item.lastSeenBeacon != nil && item.lastSeenBeacon.proximity != CLProximityUnknown && item.lastSeenBeacon.proximity != CLProximityFar){
         return indexPath;
     } else {
-        UIAlertView *lazyAlert = [[UIAlertView alloc] initWithTitle: @"You is lazy" message: @"You must be near the beacon to perform this inspection" delegate: nil cancelButtonTitle: @"Ok" otherButtonTitles: nil];
+        UIAlertView *lazyAlert = [[UIAlertView alloc] initWithTitle: @"Out of Range" message: @"You must be near a beacon to perform this inspection." delegate: nil cancelButtonTitle: @"Ok" otherButtonTitles: nil];
         [lazyAlert show];
         return nil;
     }

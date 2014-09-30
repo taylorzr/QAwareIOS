@@ -20,6 +20,12 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setValue:@"brandon" forKey:@"name"];
+    [defaults setValue:@"1" forKey:@"employee_id"];
+    [defaults synchronize];
+    
+    self.window.backgroundColor = [UIColor colorWithRed:0.973 green:0.973 blue:1.0 alpha:.75];
     
     return YES;
 }
