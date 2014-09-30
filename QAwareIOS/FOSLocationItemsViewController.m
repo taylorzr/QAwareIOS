@@ -238,6 +238,7 @@
         [lazyAlert show];
         return nil;
     }
+    return indexPath;
     
 }
 
