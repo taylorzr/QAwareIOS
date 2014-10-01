@@ -16,7 +16,6 @@
 @interface FOSLocationItemsViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *itemsTableView;
-@property (strong, nonatomic) CLLocationManager *locationManager;
 
 @end
 
@@ -43,8 +42,8 @@
         NSString *beaconID = [beaconRegion.minor stringValue];
         NSString *userID = [[NSUserDefaults standardUserDefaults] stringForKey:@"employee_id"];
         NSString *message = [NSString stringWithFormat:@"Minor: %@\nEmployee Id: %@", beaconID, userID];
-        UIAlertView *enterAlert = [[UIAlertView alloc] initWithTitle:@"Enter Region" message:message delegate:nil cancelButtonTitle:@"Cool." otherButtonTitles:nil, nil];
-        [enterAlert show];
+//        UIAlertView *enterAlert = [[UIAlertView alloc] initWithTitle:@"Enter Region" message:message delegate:nil cancelButtonTitle:@"Cool." otherButtonTitles:nil, nil];
+//        [enterAlert show];
 
         NSDictionary *beaconData = [[NSDictionary alloc] initWithObjectsAndKeys:
                                     beaconID, @"minor_id",
@@ -76,8 +75,8 @@
         NSString *beaconID = [beaconRegion.minor stringValue];
         NSString *userID = [[NSUserDefaults standardUserDefaults] stringForKey:@"employee_id"];
         NSString *message = [NSString stringWithFormat:@"Minor: %@\nEmployee Id: %@", beaconID, userID];
-        UIAlertView *exitAlert = [[UIAlertView alloc] initWithTitle:@"Exit Region" message:message delegate:nil cancelButtonTitle:@"Cool." otherButtonTitles:nil, nil];
-        [exitAlert show];
+//        UIAlertView *exitAlert = [[UIAlertView alloc] initWithTitle:@"Exit Region" message:message delegate:nil cancelButtonTitle:@"Cool." otherButtonTitles:nil, nil];
+//        [exitAlert show];
         
         NSDictionary *beaconData = [[NSDictionary alloc] initWithObjectsAndKeys:
                                     beaconID, @"minor_id",
@@ -99,6 +98,11 @@
         NSError *error = nil;
         NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
         NSLog(@"%i", response.statusCode);
+        
+        if ([[self.navigationController visibleViewController] isKindOfClass: [FOSInspectionViewController class]])
+        {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
     }
 }
 
@@ -117,6 +121,11 @@
                         NSIndexPath *index = [NSIndexPath indexPathForItem:row inSection:@1];
                         UITableViewCell *cell = [self.itemsTableView cellForRowAtIndexPath:index];
                         [self performSegueWithIdentifier:@"inspectionView" sender:cell];
+                    }
+                } else if (beacon.proximity == CLProximityFar || beacon.proximity == CLProximityUnknown) {
+                    if ([[self.navigationController visibleViewController] isKindOfClass: [FOSInspectionViewController class]])
+                    {
+                        [self.navigationController popToRootViewControllerAnimated:YES];
                     }
                 }
             }

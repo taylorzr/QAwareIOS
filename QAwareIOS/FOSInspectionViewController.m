@@ -7,6 +7,7 @@
 //
 
 #import "FOSInspectionViewController.h"
+#import "FOSLocationItemsViewController.h"
 
 @interface FOSInspectionViewController () <UIWebViewDelegate>
 
@@ -26,6 +27,13 @@
     NSLog(@"%@", inspectionURL);
     NSURLRequest *request = [NSURLRequest requestWithURL:inspectionURL];
     [self.inspectionWebView loadRequest:request];
+    
+//    NSUInteger index = [[self.navigationController viewControllers] indexOfObject: self];
+//    NSLog(@"%lu", index);
+//    NSUInteger newIndex = index - 1;
+//    FOSLocationItemsViewController *tableController = [[self.navigationController viewControllers] objectAtIndex: newIndex];
+//    NSLog(@"%@", tableController);
+//    tableController.locationManager.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,6 +49,11 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
+
+//- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLBeaconRegion *)region
+//{
+//    [self.navigationController popToRootViewControllerAnimated:YES];
+//}
 
 /*
 #pragma mark - Navigation

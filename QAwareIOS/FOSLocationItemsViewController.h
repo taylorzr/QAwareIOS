@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+@import CoreLocation;
 
 @interface FOSLocationItemsViewController : UIViewController
 
 
 @property (strong, nonatomic) NSMutableArray *items;
 @property (nonatomic) BOOL *allowsSelection;
+@property (strong, nonatomic) CLLocationManager *locationManager;
 
 
 @end
