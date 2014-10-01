@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="hTr-WX-03W">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
-        <!--Items-->
+        <!--Inspection Locations-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
                 <viewController id="vXZ-lx-hvc" customClass="FOSLocationItemsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Vnl-Xa-LOh"/>
@@ -18,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="table" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="aMZ-Mx-4IH">
-                                <rect key="frame" x="0.0" y="28" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="596"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Item" textLabel="NVS-MB-gVB" detailTextLabel="EMS-GJ-n6o" style="IBUITableViewCellStyleValue1" id="hyZ-CZ-YeT" customClass="FOSLocationItemCell">
@@ -27,13 +28,13 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hyZ-CZ-YeT" id="xSE-a9-6pP">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NVS-MB-gVB">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Location" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NVS-MB-gVB">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Location: Unknown" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EMS-GJ-n6o">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Out of range" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EMS-GJ-n6o">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
@@ -42,28 +43,27 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="8Ae-oh-hvm" kind="modal" identifier="inspectionView" id="P1O-9w-Jxg"/>
+                                            <segue destination="8Ae-oh-hvm" kind="push" identifier="inspectionView" id="P1O-9w-Jxg"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="vXZ-lx-hvc" id="IqK-Wh-aZA"/>
+                                    <outlet property="dataSource" destination="vXZ-lx-hvc" id="DIm-0y-VxV"/>
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="RFM-a0-uZg"/>
                                 </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Items" id="dlF-WY-14h"/>
+                    <navigationItem key="navigationItem" title="Inspection Locations" id="dlF-WY-14h"/>
                     <connections>
                         <outlet property="itemsTableView" destination="aMZ-Mx-4IH" id="Awv-Q6-RRs"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="996" y="110"/>
+            <point key="canvasLocation" x="1484" y="110"/>
         </scene>
-        <!--Inspection View Controller-->
+        <!--Form-->
         <scene sceneID="yB2-ds-OQU">
             <objects>
                 <viewController storyboardIdentifier="inspection" id="8Ae-oh-hvm" customClass="FOSInspectionViewController" sceneMemberID="viewController">
@@ -75,36 +75,40 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gFi-cP-S3h">
-                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
-                                <items>
-                                    <barButtonItem title="Cancel" id="aPn-3h-tlT">
-                                        <connections>
-                                            <segue destination="vXZ-lx-hvc" kind="modal" modalTransitionStyle="crossDissolve" id="uXv-d6-QC0"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="mcl-VZ-lII"/>
-                                    <barButtonItem title="Done" id="tvt-x6-LN9">
-                                        <connections>
-                                            <segue destination="vXZ-lx-hvc" kind="modal" id="4GT-C8-XBp"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
                             <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9uu-Oh-TGa">
-                                <rect key="frame" x="0.0" y="20" width="320" height="504"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Form" id="Mhd-J7-JhV"/>
                     <connections>
                         <outlet property="inspectionWebView" destination="9uu-Oh-TGa" id="Bg7-e3-rrZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dCt-AN-3Pc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1401" y="110"/>
+            <point key="canvasLocation" x="1933" y="110"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="NSZ-TQ-TOW">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WFM-Q3-Zv8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hTr-WX-03W" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ws6-MS-7m0">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="TN6-Gf-cvT"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="996" y="110"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -112,7 +116,4 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="uXv-d6-QC0"/>
-    </inferredMetricsTieBreakers>
 </document>

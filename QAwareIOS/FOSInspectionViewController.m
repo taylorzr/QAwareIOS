@@ -35,21 +35,10 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    NSCachedURLResponse *cachedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:webView.request];
-    NSHTTPURLResponse *response = (NSHTTPURLResponse *)[cachedResponse response];
-    long code = response.statusCode;
-    NSLog(@"HTTP Response code: %ld", code);
-    if (self.initialPage) {
-        NSLog(@"This is the first time a page loaded");
-        self.initialPage = NO;
-    } else {
-        if (code == 302){
-            NSLog(@"Happiness has been achieved");
-        } else if (code == 422) {
-            NSLog(@"You did something very stupid");
-        } else {
-            NSLog(@"Either you cancelled or something went terribly wrong");
-        }
+    NSString *url = self.inspectionWebView.request.URL.absoluteString;
+    if ([url isEqualToString: @"http://qaware.herokuapp.com/forms/confirmation"])
+    {
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 

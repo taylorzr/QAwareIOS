@@ -15,8 +15,8 @@
 
 @interface FOSLocationItemsViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 
-@property (strong, nonatomic) CLLocationManager *locationManager;
 @property (weak, nonatomic) IBOutlet UITableView *itemsTableView;
+@property (strong, nonatomic) CLLocationManager *locationManager;
 
 @end
 

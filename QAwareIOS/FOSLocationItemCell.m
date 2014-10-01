@@ -57,8 +57,8 @@
                        context:(void *)context {
     if ([object isEqual:self.item] && [keyPath isEqualToString:@"lastSeenBeacon"]) {
         NSString *proximity = [self nameForProximity:self.item.lastSeenBeacon.proximity];
-        self.detailTextLabel.text = [NSString stringWithFormat:@"Location: %@", proximity];
-        if (proximity == @"Near" || proximity == @"Immediate") {
+        if ([proximity isEqualToString: @"Near"] || [proximity isEqualToString: @"Immediate"]) {
+            self.detailTextLabel.text = @"In range";
             self.detailTextLabel.textColor = [UIColor whiteColor];
             self.textLabel.textColor = [UIColor whiteColor];
             self.detailTextLabel.backgroundColor = [UIColor colorWithRed:0.557 green:0.267 blue:0.678 alpha:0.5];
