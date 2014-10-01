@@ -28,7 +28,12 @@
     self.locationManager.delegate = self;
     
     [self loadItems];
-    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+//    FOSInspectionViewController *web = [self.storyboard instantiateViewControllerWithIdentifier: @"inspection"];
+//    [self presentViewController: web animated:YES completion:nil];
+//    [self performSegueWithIdentifier:@"inspectionView" sender:self];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLBeaconRegion *)region {
@@ -104,9 +109,16 @@
         for (FOSLocationItem *item in self.items) {
             if ([item isEqualToCLBeacon: beacon]) {
                 item.lastSeenBeacon = beacon;
+                if (beacon.proximity == CLProximityImmediate){
+                    NSUInteger *row = [self.items indexOfObject:item];
+                    NSIndexPath *index = [NSIndexPath indexPathForItem:row inSection:@1];
+                    UITableViewCell *cell = [self.itemsTableView cellForRowAtIndexPath:index];
+                    [self performSegueWithIdentifier:@"inspectionView" sender:cell];
+                }
             }
         }
     }
+    
 }
 
 - (void)locationManager:(CLLocationManager *)manager monitoringDidFailForRegion:(CLRegion *)region withError:(NSError *)error
@@ -210,14 +222,14 @@
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    FOSLocationItem *item = [self.items objectAtIndex: indexPath.row];
-    if (item.lastSeenBeacon != nil && item.lastSeenBeacon.proximity != CLProximityUnknown && item.lastSeenBeacon.proximity != CLProximityFar){
-        return indexPath;
-    } else {
-        UIAlertView *lazyAlert = [[UIAlertView alloc] initWithTitle: @"Out of Range" message: @"You must be near a beacon to perform this inspection." delegate: nil cancelButtonTitle: @"Ok" otherButtonTitles: nil];
-        [lazyAlert show];
-        return nil;
-    }
+//    FOSLocationItem *item = [self.items objectAtIndex: indexPath.row];
+//    if (item.lastSeenBeacon != nil && item.lastSeenBeacon.proximity != CLProximityUnknown && item.lastSeenBeacon.proximity != CLProximityFar){
+//        return indexPath;
+//    } else {
+//        UIAlertView *lazyAlert = [[UIAlertView alloc] initWithTitle: @"Out of Range" message: @"You must be near a beacon to perform this inspection." delegate: nil cancelButtonTitle: @"Ok" otherButtonTitles: nil];
+//        [lazyAlert show];
+//        return nil;
+//    }
     return indexPath;
     
 }

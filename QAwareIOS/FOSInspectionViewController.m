@@ -26,8 +26,6 @@
     NSLog(@"%@", inspectionURL);
     NSURLRequest *request = [NSURLRequest requestWithURL:inspectionURL];
     [self.inspectionWebView loadRequest:request];
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,13 +38,14 @@
     NSCachedURLResponse *cachedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:webView.request];
     NSHTTPURLResponse *response = (NSHTTPURLResponse *)[cachedResponse response];
     long code = response.statusCode;
+    NSLog(@"HTTP Response code: %ld", code);
     if (self.initialPage) {
         NSLog(@"This is the first time a page loaded");
         self.initialPage = NO;
     } else {
-        if (code == 200){
+        if (code == 302){
             NSLog(@"Happiness has been achieved");
-        } else if (code == 201) {
+        } else if (code == 422) {
             NSLog(@"You did something very stupid");
         } else {
             NSLog(@"Either you cancelled or something went terribly wrong");
