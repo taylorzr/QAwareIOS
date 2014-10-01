@@ -16,6 +16,7 @@
 @interface FOSLocationItemsViewController () <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *itemsTableView;
+@property (strong, nonatomic) CLLocationManager *locationManager;
 
 @end
 
@@ -117,8 +118,15 @@
                     UIViewController *currentView = [self.navigationController topViewController];
                     if ([currentView isKindOfClass:[self class]])
                     {
-                        NSUInteger *row = [self.items indexOfObject:item];
-                        NSIndexPath *index = [NSIndexPath indexPathForItem:row inSection:@1];
+//                        FOSInspectionViewController *vc = [[FOSInspectionViewController alloc] init];
+//                        vc.query = item.url;
+//                        [self.navigationController pushViewController:vc animated:YES];
+//                        [self performSegueWithIdentifier:@"inspectionView" sender:self];
+                        NSUInteger row = [self.items indexOfObject:item];
+//                        NSLog(@"%lu", (unsigned long)row);
+                        
+                        NSIndexPath *index = [NSIndexPath indexPathForRow:row inSection:0];
+//                        NSLog(@"%@", index);
                         UITableViewCell *cell = [self.itemsTableView cellForRowAtIndexPath:index];
                         [self performSegueWithIdentifier:@"inspectionView" sender:cell];
                     }
@@ -235,19 +243,20 @@
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    FOSLocationItem *item = [self.items objectAtIndex: indexPath.row];
-//    if (item.lastSeenBeacon != nil && item.lastSeenBeacon.proximity != CLProximityUnknown && item.lastSeenBeacon.proximity != CLProximityFar){
-//        return indexPath;
-//    } else {
-//        UIAlertView *lazyAlert = [[UIAlertView alloc] initWithTitle: @"Out of Range" message: @"You must be near a beacon to perform this inspection." delegate: nil cancelButtonTitle: @"Ok" otherButtonTitles: nil];
-//        [lazyAlert show];
-//        return nil;
-//    }
+    FOSLocationItem *item = [self.items objectAtIndex: indexPath.row];
+    if (item.lastSeenBeacon != nil && item.lastSeenBeacon.proximity != CLProximityUnknown && item.lastSeenBeacon.proximity != CLProximityFar){
+        return indexPath;
+    } else {
+        UIAlertView *lazyAlert = [[UIAlertView alloc] initWithTitle: @"Out of Range" message: @"You must be near a beacon to perform this inspection." delegate: nil cancelButtonTitle: @"Ok" otherButtonTitles: nil];
+        [lazyAlert show];
+        return nil;
+    }
     return indexPath;
     
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSLog(@"%@", sender);
     if ([segue.identifier isEqualToString:@"inspectionView"]) {
         NSIndexPath *indexPath = [self.itemsTableView indexPathForSelectedRow];
         FOSLocationItem *locationItem = [self.items objectAtIndex:indexPath.row];

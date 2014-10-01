@@ -24,8 +24,8 @@
     [defaults setValue:@"brandon" forKey:@"name"];
     [defaults setValue:@"1" forKey:@"employee_id"];
     [defaults synchronize];
-    
-    self.window.backgroundColor = [UIColor colorWithRed:0.973 green:0.973 blue:1.0 alpha:.75];
+    [
+    [UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.973 green:0.973 blue:1.0 alpha:1.0]];
     
     return YES;
 }

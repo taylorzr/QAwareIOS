@@ -14,7 +14,6 @@
 
 @property (strong, nonatomic) NSMutableArray *items;
 @property (nonatomic) BOOL *allowsSelection;
-@property (strong, nonatomic) CLLocationManager *locationManager;
 
 
 @end
