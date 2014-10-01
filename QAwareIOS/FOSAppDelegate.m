@@ -25,6 +25,7 @@
     [defaults setValue:@"1" forKey:@"employee_id"];
     [defaults synchronize];
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"nav-bar-logo.png"] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil]];
     
