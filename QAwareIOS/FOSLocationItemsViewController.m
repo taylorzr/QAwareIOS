@@ -110,10 +110,14 @@
             if ([item isEqualToCLBeacon: beacon]) {
                 item.lastSeenBeacon = beacon;
                 if (beacon.proximity == CLProximityImmediate){
-                    NSUInteger *row = [self.items indexOfObject:item];
-                    NSIndexPath *index = [NSIndexPath indexPathForItem:row inSection:@1];
-                    UITableViewCell *cell = [self.itemsTableView cellForRowAtIndexPath:index];
-                    [self performSegueWithIdentifier:@"inspectionView" sender:cell];
+                    UIViewController *currentView = [self.navigationController topViewController];
+                    if ([currentView isKindOfClass:[self class]])
+                    {
+                        NSUInteger *row = [self.items indexOfObject:item];
+                        NSIndexPath *index = [NSIndexPath indexPathForItem:row inSection:@1];
+                        UITableViewCell *cell = [self.itemsTableView cellForRowAtIndexPath:index];
+                        [self performSegueWithIdentifier:@"inspectionView" sender:cell];
+                    }
                 }
             }
         }
