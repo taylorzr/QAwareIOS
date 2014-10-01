@@ -24,8 +24,10 @@
     [defaults setValue:@"brandon" forKey:@"name"];
     [defaults setValue:@"1" forKey:@"employee_id"];
     [defaults synchronize];
-    [
-    [UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.973 green:0.973 blue:1.0 alpha:1.0]];
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"nav-bar-logo.png"] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil]];
+    
     
     return YES;
 }

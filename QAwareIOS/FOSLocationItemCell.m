@@ -61,9 +61,9 @@
             self.detailTextLabel.text = @"In range";
             self.detailTextLabel.textColor = [UIColor whiteColor];
             self.textLabel.textColor = [UIColor whiteColor];
-            self.detailTextLabel.backgroundColor = [UIColor colorWithRed:0.557 green:0.267 blue:0.678 alpha:0.5];
-            self.textLabel.backgroundColor = [UIColor colorWithRed:0.557 green:0.267 blue:0.678 alpha:0.5];
-            self.backgroundColor = [UIColor colorWithRed:0.557 green:0.267 blue:0.678 alpha:0.5];
+            self.detailTextLabel.backgroundColor = [UIColor colorWithRed:0.557 green:0.267 blue:0.678 alpha:1.0];
+            self.textLabel.backgroundColor = [UIColor colorWithRed:0.557 green:0.267 blue:0.678 alpha:1.0];
+            self.backgroundColor = [UIColor colorWithRed:0.557 green:0.267 blue:0.678 alpha:1.0];
         }
         else {
             self.detailTextLabel.textColor = [UIColor grayColor];
